@@ -1,0 +1,167 @@
+.DecisionMaker-table-main {
+  border: 0.6px solid #D5D5D5;
+  border-radius: 14px !important;
+  box-shadow: none !important;
+  font-family: Inter;
+}
+
+.DecisionMaker-table thead tr {
+  background-color: #fcfdfd;
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
+}
+
+.DecisionMaker-table .MuiTableBody-root .MuiTableRow-root .MuiTableCell-root {
+  border-bottom: none !important;
+}
+
+.DecisionMakecheckbox-row-table {
+  width: 5% !important;
+}
+
+.Decisions-row-tableName,
+.DecisionstableStrength,
+.employee-row-tableCompany,
+.annual-row-tableIndustry,
+.industry-row-tableStatus,
+.prospects-row-tableDetails {
+  text-transform: capitalize;
+  width: 14%;
+}
+
+.table-cellhandleRightsidebar {
+  margin: 20px 0 0 60px;
+}
+
+.DecisionmakerScore {
+  background-color: #0eb93e;
+  color: white;
+  padding: 4px, 8px, 4px, 8px;
+  border-radius: 26px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* .company-name-countrylastname{
+  float: left;
+} */
+.Decision-maker-userTeblesell {
+  min-width: 12rem;
+  position: relative;
+}
+
+.Decision-maker-user-name-main-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.letter-heading {
+  text-transform: uppercase !important;
+}
+
+.Decision-maker-user-name {
+  text-transform: capitalize;
+  border: 2px solid #da291c;
+  color: #003057;
+  width: 46px;
+  height: 46px;
+  background-color: #f5f6fa;
+  border-radius: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.decisionMakerImage {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  position: absolute;
+  top: 12px;
+  left: 40px;
+}
+
+.button-collapse-table svg {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.DecisionMaker-table-main tr {
+  border-bottom: 0.6px solid #dedfe5;
+}
+
+.Suspect-table-data {
+  text-transform: capitalize;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Suspect-table-data svg {
+  color: #da291c;
+}
+
+.DecisionMakercheckbox-row-table input {
+  height: 16px;
+  width: 16px;
+  border: 1px solid red;
+}
+
+.score-pera-tag {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 17px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
+.DecisionMaker-table .MuiTable-root .MuiTableBody-root .MuiTableRow-root:last-child {
+  border-bottom: unset;
+}
+
+.DecisionMaker-table .MuiTableBody-root .MuiTableRow-root:last-child {
+  border: none !important;
+}
+
+.Decision-maker-user-namenoborder {
+  color: #003057;
+  width: 46px;
+  height: 46px;
+  background-color: #F5F6FA;
+  border-radius: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.hide-image {
+  display: none;
+}
+
+.Decisionstable {
+  text-transform: capitalize;
+  width: 12%;
+}
+
+.name-and-title-text {
+  width: 70%;
+}
+
+.fullnameofuser {
+  display: flex;
+  gap: 5px;
+}
+
+.annual-revenue-table {
+  text-transform: capitalize;
+}

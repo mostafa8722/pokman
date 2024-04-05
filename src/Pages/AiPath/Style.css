@@ -1,0 +1,8 @@
+.child-section-of-everypage-aipath {
+    padding: 35px !important;
+    /* height: 91vh !important; */
+    display: flex;
+    flex-direction: column;
+    gap: 20px !important;
+    text-transform: capitalize;
+}

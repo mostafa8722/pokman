@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+* {
+  padding: 0;
+  margin: 0;
+}
+.graphup-and-line {
+  width: 204px;
+  height: 24px;
+  align-items: center;
+  display: flex;
+}
+.card-one-Total-AI-leads {
+  padding: 15px;
+  border-radius: 10px;
+  width: 224px;
+  height: 161px;
+  background-color: #FFFFFF;
+}
+.card-heading-main {
+  text-transform: capitalize;
+  color: #202224 !important;
+  padding-bottom: 20px;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: 0px;
+  text-align: left;
+  opacity: 0.7;
+}
+.number-in-card {
+  color: #202224;
+  padding-bottom: 34px;
+  font-family: Inter;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 34px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+.number-in-card-last {
+  color: #202224;
+  padding-bottom: 26px;
+  font-family: Inter;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+.graph-ratio {
+  padding-left: 8px;
+  padding-right: 5px;
+  font-family: Inter;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 19px;
+  letter-spacing: 0px;
+  text-align: left;
+  color: #00B69B;
+}
+.graph-ratio-down {
+  padding-left: 8px;
+  padding-right: 5px;
+  font-family: Inter;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 19px;
+  letter-spacing: 0px;
+  text-align: left;
+  color: #F93C65;
+}
+.with-graph-ratio-and-info {
+  color: #606060;
+  font-family: Inter;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 19px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+.agent-name {
+  display: grid;
+  gap: 8px;
+  width: 236px;
+  height: 56px;
+}
+.hi-dash-name {
+  text-transform: capitalize;
+  font-family: Inter;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 29px;
+  letter-spacing: 0px;
+  text-align: left;
+  color: #101820;
+}
+.past-information {
+text-transform: capitalize  ;
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19px;
+  letter-spacing: 0px;
+  text-align: left;
+  color: #101820;
+  opacity: 0.5;
+}
+.inner-cards-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.outer-cards-container {
+  padding-top: 25px;
+  padding-bottom: 35px;
+}
+.card-five-Total-AI-leads {
+  padding: 15px 28px 15px 15px;
+  border-radius: 10px;
+  width: 224px;
+  height: 161px;
+  background-color: #FFFFFF;
+}
+.all-content-bg {
+  background: #F4F5F9;
+  height: 100%;
+}
+.graphup-and-line img {
+  height: 16px;
+  width: 16px;
+}
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+  .agent-name{
+    flex-direction: column !important;
+    
+  }
+  .inner-cards-container{
+    flex-direction: column !important;
+  }
+  .card-one-Total-AI-leads{
+    width: 300px;
+  }
+  .card-five-Total-AI-leads{
+    width: 300px;
+  }
+  .kljdf{
+  display: block;
+  }
+}

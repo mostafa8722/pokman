@@ -1,0 +1,16 @@
+.industry-detail-dropdowntext{
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17px;
+    letter-spacing: 0px;
+    text-align: left;
+    color:#202224;
+}
+.industry-text-dropdown-head-main{
+    text-transform: capitalize;
+    width: 150px!important;
+}
+.ContactDetailList-dropdown-industry{
+    width: 150px !important;
+}
