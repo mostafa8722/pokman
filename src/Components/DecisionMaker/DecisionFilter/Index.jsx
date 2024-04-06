@@ -26,6 +26,7 @@ export default function LeadsFilter({
   const [selectedIndustry, setSelectedIndustry] = React.useState("");
   const [selectedCompany, setSelectedCompany] = React.useState("");
   const [aiDecisionMaker, setAiDecisionMaker] = React.useState("");
+
   const handleCompanyChange = (event, item) => {
     if (event.target.checked) {
       setSelectedCompany([...selectedData, item]);
@@ -45,7 +46,7 @@ export default function LeadsFilter({
 
   const [loading, setLoading] = React.useState(false);
   const [strength, setStrength] = React.useState([]);
-
+  const [isLoadMakerFilters, setIsLoadMakerFilters] = React.useState(false);
 
   const handleIndustryChange = (event) => {
     const value = event.target.value;
@@ -101,8 +102,12 @@ export default function LeadsFilter({
       .catch(() => { });
   };
   React.useEffect(() => {
+    if(isLoadMakerFilters){
     aiDecisionMakerFilters();
-  }, []);
+    aiDecisionMakerdropdown();
+    }else
+  setIsLoadMakerFilters(true)
+  }, [isLoadMakerFilters]);
   const [aidecisiondata, setaidecisiondata] = React.useState("");
   const aiDecisionMakerdropdown = () => {
     setLoading(true);
@@ -124,10 +129,7 @@ export default function LeadsFilter({
         setLoading(false);
       });
   };
-  React.useEffect(() => {
-    aiDecisionMakerFilters();
-    aiDecisionMakerdropdown();
-  }, []);
+
   return (
     <>
       {loading ? <Loader /> : null}

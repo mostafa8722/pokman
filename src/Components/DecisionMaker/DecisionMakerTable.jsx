@@ -19,6 +19,7 @@ import IndustryDropdown from "../AiLeads/IndustrySectorDropdown/Index";
 import { toast } from "react-toastify";
 import InfiniteScroll from "react-infinite-scroll-component";
 import * as XLSX from 'xlsx';
+import { Co2Sharp } from "@mui/icons-material";
 function Row({ row, connectionStrength }) {
   const [openSidebar, setOpenSidebar] = React.useState(false);
   const [dataShortestPath, setDataShortestPath] = React.useState();
@@ -169,7 +170,8 @@ export default function DecisionMakerTable({
   const [checkDecisionMakerData, setcheckDecisionMakerData] = React.useState([]);
   const loggedInUserId = GetUserId();
   const [selectedRows, setSelectedRows] = React.useState([]);
-  const [hasMore, setHasMore] = React.useState(true);
+  const [hasMore, setHasMore] = React.useState(false);
+  const [isfetchData, setIsfetchData] = React.useState(false);
   // const [skip, setSkip] = React.useState(0);
   React.useEffect(() => {
     if (tableCommingData) {
@@ -177,13 +179,21 @@ export default function DecisionMakerTable({
     }
   }, [tableCommingData])
   const fetchMoreData = () => {
+
+setTimeout(()=>{
+  if(!loading){
     setIsApplyFilter(false);
     const newSkip = skip + 50;
     setSkip(newSkip);
+    }
 
+},100)
     // fetchData(newSkip);
   };
   const fetchData = () => {
+
+
+    if(tableCommingData.length!==skip) return ;
     setLoading(true);
     const option = {
       method: "GET",
@@ -196,9 +206,13 @@ export default function DecisionMakerTable({
       .then((response) => {
         setLoading(false);
         const comingData = response?.data?.data;
-        if (comingData.length === 0) {
+        if (comingData.length === 0 || comingData.length % 50 !==0) {
+   
           setHasMore(false);
         } else {
+          setTimeout(() => {
+            setHasMore(true);
+          }, 1000);
           setDecisionMakerData([...decisionMakerData, ...comingData]);
           setTableCommingData([...decisionMakerData, ...comingData]);
           setcheckDecisionMakerData(comingData);
@@ -208,7 +222,9 @@ export default function DecisionMakerTable({
         setLoading(false);
       });
   };
+
   const fetchDataReturnFilter = () => {
+  
     setLoading(true);
     const option = {
       method: "GET",
@@ -275,9 +291,14 @@ export default function DecisionMakerTable({
       handlePassSubmit();
     }
     else if (firstFilterData?.length === 0 && !applyFilter) {
-      fetchData();
+      if(isfetchData){
+        fetchData();
+      }else{
+        setIsfetchData(true);
+      }
+     
     }
-  }, [skip, firstFilterData, applyFilter]);
+  }, [skip, firstFilterData, applyFilter,isfetchData]);
   React.useEffect(() => {
     if (istableDataFilter) {
       fetchDataReturnFilter();

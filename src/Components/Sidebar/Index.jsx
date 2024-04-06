@@ -175,6 +175,8 @@ export default function Sidebar({
   const [leadsProfileData, setLeadsProfileData] = React.useState([]);
   const [decisionMakerData, setDecisionMakerData] = React.useState([]);
   const [showSearchdata, setshowSearchdata] = React.useState(false);
+  const [isLoadProfile, setIsLoadProfile] = React.useState(false);
+  const [isStateNew, setIsStateNew] = React.useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -245,10 +247,15 @@ export default function Sidebar({
       });
   };
   React.useEffect(() => {
+    if(isLoadProfile){
     if (userId || refState) {
       LeadsProfile();
     }
-  }, [userId, refState]);
+  }else{
+    setIsLoadProfile(true);
+  }
+
+  }, [userId, refState,isLoadProfile]);
 
   const decisionMakerProfile = () => {
     setLoading(true);
@@ -271,10 +278,14 @@ export default function Sidebar({
       });
   };
   React.useEffect(() => {
+    if(isStateNew){
     if (userId || refStatenew) {
       decisionMakerProfile();
     }
-  }, [userId, refStatenew]);
+  }else{
+    setIsStateNew(true);
+  }
+  }, [userId, refStatenew,isStateNew]);
 
   // const handlesearch = () => {
   //   const data = {

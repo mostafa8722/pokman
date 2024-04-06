@@ -171,9 +171,10 @@ export default function EmployeesTable({
   const [selectedRows, setSelectedRows] = React.useState([]);
   const [strengthTableData, setStrengthTableData] = React.useState([]);
   const decisionMakerTableData = decisionMakerData;
-  const [hasMore, setHasMore] = React.useState(true);
+  const [hasMore, setHasMore] = React.useState(false);
   const [page, setPage] = React.useState(1);
   const [skip, setSkip] = React.useState(0);
+  const [ isMakerTable,  setIsMakerTable] = React.useState(false);
   const getStrength = async () => {
     if (!decisionMakerTableData?.length) return;
     setLoading(true);
@@ -222,6 +223,8 @@ export default function EmployeesTable({
     // aiDecisionMakerTable(newSkip);
   };
   const aiDecisionMakerTable = (eventName) => {
+
+    setHasMore(false);
     setLoading(true);
     const option = {
       method: "GET",
@@ -238,20 +241,18 @@ export default function EmployeesTable({
       .then((e) => {
         setLoading(false);
         const comingData = e?.data?.data;
-        if (comingData.length === 0) {
+        if (comingData.length === 0 ) {
           setHasMore(false);
           setDecisionMakerData([]);
           setStrengthTableData([]);
         } else {
-          setDecisionMakerData([...comingData]);
+          if( comingData.length % 50 ===0)
+         setTimeout(()=>  setHasMore(true),1000);
+        decisionMakerData.length===0? setDecisionMakerData(comingData):
+          setDecisionMakerData([...decisionMakerData],[...comingData]);
         }
       })
-      // axios(option)
-      //     .then((e) => {
-      //         setLoading(false);
-      //         setDecisionMakerData(e?.data?.data);
-      //         setHasMore(false);
-      //     })
+
       .catch(() => {
         setLoading(false);
       });
@@ -262,10 +263,13 @@ export default function EmployeesTable({
   //     }
   // }, [dataForInformation]);
   React.useEffect(() => {
-    if (dataForInformation) {
+ 
+    if (dataForInformation && isMakerTable) {
       aiDecisionMakerTable();
+    }else{
+      setIsMakerTable(true)
     }
-  }, [dataForInformation]);
+  }, [dataForInformation,isMakerTable]);
   React.useEffect(() => {
     if (dataForInformation) {
       setComingOrgId(dataForInformation?.org_id);

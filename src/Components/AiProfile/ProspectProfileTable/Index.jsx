@@ -22,6 +22,7 @@ export default function ProspectProfileTable({ setRefStatenew }) {
   const navigate = useNavigate();
   const [selectedStar, setSelectedStar] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [isMakerProfile, setIsMakerProfile] = useState(false);
   const [decisionMakerData, setDecisionMakerData] = useState([]);
   const userId = GetUserId();
   const handleStarClick = (item) => {
@@ -95,10 +96,12 @@ export default function ProspectProfileTable({ setRefStatenew }) {
       });
   }
   useEffect(() => {
-    if (userId) {
-      decisionMakerProfile();
+    if (userId && isMakerProfile) {
+     decisionMakerProfile();
+    } else{
+      setIsMakerProfile(true)
     }
-  }, [userId]);
+  }, [userId,isMakerProfile]);
   return (
     <>
       {

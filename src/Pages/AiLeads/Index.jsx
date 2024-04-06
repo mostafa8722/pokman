@@ -13,7 +13,7 @@ import { APIUrlOne, setLeadsFilterStatsData } from "../../Utils/Utils";
 const AILeads = () => {
   const [tableCommingData, setTableCommingData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
-  const [hasMore, setHasMore] = React.useState(true);
+  const [hasMore, setHasMore] = React.useState(false);
   const [selectedData, setSelectedData] = React.useState([]);
   const [istableDataFilter, setIstableDataFilter] = React.useState(false);
   const [currentLeadsLength, setCurrentLeadsLength] = React.useState('');
@@ -23,7 +23,7 @@ const AILeads = () => {
   const [showData, setShowData] = React.useState([]);
   const [showlast, setShowlast] = React.useState([]);
   const [jScoredata, setJscore] = React.useState([]);
-  const [statsCount, setStatsCount] = useState('');
+  const [statsCount, setStatsCount] = useState(0);
   const validateFilters = () => {
     if (!selectedData?.length && !showlast?.length && !jScoredata?.length) {
       toast.error("Please Select Filters");
@@ -32,6 +32,7 @@ const AILeads = () => {
     return true;
   }
   const duplicateApply = (e) => {
+
     if (!validateFilters()) return;
     setLoading(true);
     const data = {};
@@ -48,15 +49,18 @@ const AILeads = () => {
     };
     axios(option)
       .then((e) => {
-        setLoading(false);
+        setTimeout(()=>      setLoading(false),100)
         const comingData = e?.data?.data;
         const statsCount = e?.data?.count;
         setStatsCount(statsCount);
         setPage(1);
         // setLeadsFilterStatsData('filterstatscount', statsCount);
-        if (comingData.length === 0) {
+        if (comingData.length === 0 || comingData.length % 50 !==0) {
           setHasMore(false);
         } else {
+          setTimeout(() => {
+            setHasMore(true);
+          }, 1000);
         }
         if (page > 1) {
           // setTableCommingData(prevData => [...prevData, ...comingData]);
@@ -77,6 +81,9 @@ const AILeads = () => {
 
   const handleApply = (e) => {
     if (!validateFilters()) return;
+  
+    if(statsCount<=tableCommingData.length) return ;
+    setHasMore(false);
     setLoading(true);
     const data = {};
     data.categories = selectedData;
@@ -92,14 +99,17 @@ const AILeads = () => {
     };
     axios(option)
       .then((e) => {
-        setLoading(false);
+      setTimeout(()=>      setLoading(false),100)
         const comingData = e?.data?.data;
         const statsCount = e?.data?.count;
         setStatsCount(statsCount);
         // setLeadsFilterStatsData('filterstatscount', statsCount);
-        if (comingData.length === 0) {
+     
+        if (comingData.length % 50 !== 0 || comingData.length===0) {
+
           setHasMore(false);
         } else {
+          setTimeout(()=>{ setHasMore(true);},1000)
         }
         if (page > 1) {
           setTableCommingData(prevData => [...prevData, ...comingData]);

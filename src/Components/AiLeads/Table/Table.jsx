@@ -45,9 +45,10 @@ function Row({
   setExpandHandlerAccept,
   setHasMore,
   onLoadApi,
+  setHasMoreInner,
   setopenRowId
 }) {
-  const [hasMoreInnerTable, setHasMoreInnerTable] = useState(true);
+  const [hasMoreInnerTable, setHasMoreInnerTable] = useState(false);
   const navigate = useNavigate();
   const [loading, setLoading] = React.useState(false);
   const [innerTableData, setInnerTAbleData] = React.useState([]);
@@ -132,24 +133,12 @@ function Row({
       .then((e) => {
         const childData = e;
         getStrength(childData);
-        // setHasMoreInnerTable(true);
+      
         setLoading(false);
         if (e?.status === 200) {
           const innerdata = e?.data?.data;
 
-          // if (innerdata.length === 0) {
-          //   // setHasMore(false);
-          // } else {
-          // }
-          // if (pageInner > 1) {
-          //   setInnerTAbleData(innerdata);
-          // }
-          // else {
-          //   setInnerTAbleData(innerdata);
-          // }
-          // if (innerdata?.length === 0) {
-          //   // setHasMore(false);
-          // }
+    
         }
       })
       .catch(() => {
@@ -211,11 +200,11 @@ function Row({
     } finally {
       setTimeout(() => {
         setLoading(false);
-      }, 1000);
-      setTimeout(() => {
         setScrollPagination(true);
-
-      }, 4000)
+       
+      }, 0);
+      setTimeout(()=>{ setHasMoreInner(true);},2000);
+     
     }
   };
 
@@ -230,7 +219,12 @@ function Row({
   // }, [innerTableData]);
 
   React.useEffect(() => {
-    if (innerTableData?.length >= 50 && row.org_id === openRowId && pageInner > 1) {
+   
+
+ 
+    if (innerTableData?.length >= 50 && row.org_id === openRowId && pageInner > 1 && pageInner <= Math.ceil(pages)) {
+     
+      setHasMoreInner(false);
       ExpandHandlerChild(openRowId);
     }
   }, [pageInner]);
@@ -240,7 +234,7 @@ function Row({
   };
 
   const pages = row.people_count / 50;
-  const [loadMore2,setLoadMore2] =useState(false);
+
   const closeExpandHandler = () => {
     setInnerTAbleData([]);
     setOpen(false);
@@ -344,6 +338,7 @@ function Row({
                 size="small"
                 onClick={() => {
                   setInnerTAbleData([]);
+                  setHasMoreInner(false);
                   setTimeout(() => {
                     if (openRowId !== row?.org_id) {
                       setLoading(true);
@@ -375,19 +370,19 @@ function Row({
                 <InfiniteScrollMain
                   pageStart={0}
                   loadMore={(e) => {
-                    console.log("page2",e)
-                    console.log("page3",Math.floor(pages))
-                    console.log("page4",pageInner)
-                    if(loadMore2){
-                    if (pageInner <= Math.floor(pages)) {
+   
+                  setTimeout(()=>{
+                   
+                    if (pageInner <= Math.ceil(pages) && hasMoreInner) {
                      setPageInner(Number(pageInner) + 1);
                     } else {
-                      setHasMoreInnerTable(false)
+                      setHasMoreInnerTable(false);
+                     // setHasMoreInner(false);
                     }
-                  }
-                  setLoadMore2(true);
+                  },10)
+               
                   }}
-                  hasMore={hasMoreInnerTable}
+                  hasMore={hasMoreInner}
                   loader={
                     <div className="loader" key={0}>
                       Loading ...
@@ -831,9 +826,9 @@ export default function AiLeadsTable({
   };
   const [loading, setLoading] = React.useState(false);
   const [jsonData, setJsonData] = React.useState([]);
-  const [hasMore, setHasMore] = React.useState(true);
-  const [hasMoreInner, setHasMoreInner] = React.useState(true);
-  const [page, setPage] = React.useState(1);
+  const [hasMore, setHasMore] = React.useState(false);
+  const [hasMoreInner, setHasMoreInner] = React.useState(false);
+  const [page, setPage] = React.useState(0);
   const [selectedRows, setSelectedRows] = React.useState([]);
   const [expandHandlerAccept, setExpandHandlerAccept] = useState([]);
   const [pageInner, setPageInner] = React.useState(1);
@@ -873,7 +868,7 @@ export default function AiLeadsTable({
 
   const aiLeadsTable = () => {
     setLoading(true);
-    // document.body.style.overflow = "hidden";
+
     const option = {
       method: "GET",
       headers: {
@@ -889,6 +884,7 @@ export default function AiLeadsTable({
         if (comingData.length === 0) {
           setHasMore(false);
         } else {
+          setHasMore(true);
         }
 
 
@@ -908,54 +904,8 @@ export default function AiLeadsTable({
       });
   };
 
-  const resetDataRetrieve = () => {
-    setLoading(true);
-    const option = {
-      method: "GET",
-      headers: {
-        "content-type": "plain/text",
-      },
-      url: `${APIUrlOne()}/v1/leads?userid=default&limit=50&skip=0`,
-    };
-    axios(option)
-      .then((e) => {
-        setLoading(false);
-        const comingData = e?.data?.data;
-        if (comingData.length === 0) {
-          setHasMore(false);
-        } else {
-        }
 
-        if (page > 1) {
-          setJsonData((prevData) => [...prevData, ...comingData]);
-        } else {
-          setJsonData(comingData);
-        }
-        if (comingData.length === 0) {
-          setHasMore(false);
-        }
-        setIstableDataFilter(false);
-        setPage(1);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
-  };
 
-  // React.useEffect(() => {
-
-  //   if (istableDataFilter) {
-  //     setPage(1);
-  //     setJsonData([]);
-  //     setHasMore(true);
-  //     if (tableCommingData?.length) {
-  //       handleApply()
-  //     } else {
-  //       aiLeadsTable();
-  //     }
-  //   }
-
-  // }, [istableDataFilter]);
 
   React.useEffect(() => {
     if (istableDataFilter) {
@@ -970,11 +920,15 @@ export default function AiLeadsTable({
   }, [istableDataFilter, tableCommingData]);
 
   React.useEffect(() => {
+    if(page>0){
     if (tableCommingData?.length) {
       handleApply();
     } else {
       aiLeadsTable();
     }
+  }else{
+    setPage(1)
+  }
   }, [page]);
 
   React.useEffect(() => {
@@ -1007,9 +961,8 @@ export default function AiLeadsTable({
     return axios(option).then((e) => {
       if (e?.status === 200) {
         const innerdata = e?.data?.data;
-        if (innerdata?.length === 0) {
-          setHasMoreInner(false);
-        }
+        
+        
         return innerdata;
         // setExpandHandlerAccept((prevData) => [...prevData, ...innerdata]);
       }
@@ -1018,6 +971,7 @@ export default function AiLeadsTable({
     });
   };
 
+ 
   const onLoadApi = (event) => {
     setopenRowId(event);
 
@@ -1033,6 +987,8 @@ export default function AiLeadsTable({
         const innerdata = e?.data?.data;
         if (innerdata?.length === 0) {
           setHasMoreInner(false);
+        }else{
+     
         }
         return innerdata;
         // setExpandHandlerAccept((prevData) => [...prevData, ...innerdata]);
@@ -1231,6 +1187,7 @@ export default function AiLeadsTable({
                           setExpandHandlerAccept={setExpandHandlerAccept}
                           setHasMore={setHasMore}
                           setopenRowId={setopenRowId}
+                          setHasMoreInner={setHasMoreInner}
                         />
                       </React.Fragment>
                     );

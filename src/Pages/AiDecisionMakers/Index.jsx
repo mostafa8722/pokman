@@ -20,8 +20,8 @@ const DecisionMaker = () => {
   const [lastdata, setlastdata] = React.useState([]);
   const [skip, setSkip] = React.useState(0);
   const [decisionMakerData, setDecisionMakerData] = React.useState([]);
-  const [hasMore, setHasMore] = useState(true);
-  const [statsCountDecisionMaker, setStatsCountDecisionMaker] = useState('');
+  const [hasMore, setHasMore] = useState(false);
+  const [statsCountDecisionMaker, setStatsCountDecisionMaker] = useState(0);
   const [applyFilter,setIsApplyFilter] = useState(false);
   const validateFilters = () => {
     if (!selectedData?.length && !showData?.length && !lastdata?.length
@@ -51,15 +51,18 @@ const DecisionMaker = () => {
     };
     axios(option)
       .then((e) => {
-        setLoading(false);
+        setTimeout(()=>      setLoading(false),100)
         if (e?.status === 200) {
           const comingData = e?.data?.data;
           const statsCount = e?.data?.count;
           setStatsCountDecisionMaker(statsCount);
           setFirstFilterData(comingData);
-          if (comingData.length === 0) {
+          if (comingData.length === 0 || comingData.length % 50 !==0) {
             setHasMore(false);
           } else {
+            setTimeout(() => {
+              setHasMore(true);
+            }, 1000);
             // setDecisionMakerData([...decisionMakerData, ...comingData]);
             // setTableCommingData(comingData);
             // setcheckDecisionMakerData(comingData);
@@ -82,6 +85,8 @@ const DecisionMaker = () => {
 
   const handlePassSubmit = (e) => {
     if (!validateFilters()) return;
+    if(statsCountDecisionMaker<=tableCommingData.length) return ;
+    setHasMore(false);
     setLoading(true);
     const data = {};
     data.categories = selectedData;
@@ -97,14 +102,17 @@ const DecisionMaker = () => {
     };
     axios(option)
       .then((e) => {
-        setLoading(false);
+        setTimeout(()=>      setLoading(false),100)
         if (e?.status === 200) {
           const comingData = e?.data?.data;
           const statsCount = e?.data?.count;
           setStatsCountDecisionMaker(statsCount);
-          if (comingData.length === 0) {
+          if (comingData.length === 0 || comingData.length % 50 !==0) {
             setHasMore(false);
           } else {
+            setTimeout(() => {
+              setHasMore(true);
+            }, 1000);
             // setDecisionMakerData([...decisionMakerData, ...comingData]);
             // setTableCommingData(comingData);
             // setcheckDecisionMakerData(comingData);

@@ -223,6 +223,7 @@ export default function LeadsFilter({ setTableCommingData, tableCommingData, ist
   setStatsCount,
   setPage
 }) {
+  const [isLoadFilters, setIsLoadFilters] = React.useState(false);
   const [selectedIndustry, setSelectedIndustry] = React.useState("");
   const [selectedRevenue, setSelectedRevenue] = React.useState("");
   const [selectedJscore, setSelectedJscore] = React.useState("");
@@ -248,8 +249,13 @@ export default function LeadsFilter({ setTableCommingData, tableCommingData, ist
       .catch(() => { });
   };
   React.useEffect(() => {
-    LeadsFilters();
-  }, []);
+    if(isLoadFilters){
+      LeadsFilters();
+    }else{
+      setIsLoadFilters(true);
+    }
+ 
+  }, [isLoadFilters]);
   const handleIndustryChange = (event) => {
     const value = event.target.value;
     setSelectedIndustry(value);

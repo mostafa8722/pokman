@@ -140,7 +140,7 @@ export default function RightSidebar({ openSidebar, dataShortestPath, setVisible
     setbuttonVisiblenew(!buttonVisiblenew);
   };
   const toggleDrawer = (anchor, open) => (event) => {
-    console.log(open, "open");
+  
     if (
       event.type === "keydown" &&
       (event.key === "Tab" || event.key === "Shift")

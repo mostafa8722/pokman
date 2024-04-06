@@ -10,6 +10,7 @@ import { APIUrlOne } from "../../../Utils/Utils";
 const AILeads = () => {
   const location = useLocation();
   const [loading, setLoading] = useState(false);
+  const [isLoadInfoData, setIsLoadInfoData] = useState(false);
   const newdata = location?.state?.data;
   const [dataForInformation, setDataForInformation] = useState('');
   const informationData = () => {
@@ -34,10 +35,12 @@ const AILeads = () => {
       });
   }
   useEffect(() => {
-    if (newdata) {
+    if (newdata && isLoadInfoData) {
       informationData()
+    }else{
+      setIsLoadInfoData(true)
     }
-  }, [newdata])
+  }, [newdata,isLoadInfoData])
   return (
     <>
       {

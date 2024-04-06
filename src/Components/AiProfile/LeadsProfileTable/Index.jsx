@@ -25,6 +25,7 @@ export default function LeadsProfileTable({ setRefState }) {
   const [selectedStar, setSelectedStar] = useState(null);
   const [loading, setLoading] = useState(false);
   const [leadsProfileData, setLeadsProfileData] = useState([]);
+  const [isLeadProfile, setIsLeadProfile] = useState(false);
   const userId = GetUserId();
   // const handleStarClick = (item) => {
   //   setSelectedStar(item?.key === selectedStar ? null : item?.key);
@@ -81,6 +82,7 @@ export default function LeadsProfileTable({ setRefState }) {
   }
 
   const LeadsProfile = () => {
+    
     setLoading(true);
     const option = {
       method: "GET",
@@ -102,10 +104,12 @@ export default function LeadsProfileTable({ setRefState }) {
       });
   }
   useEffect(() => {
-    if (userId) {
+    
+    if (userId && isLeadProfile) {
       LeadsProfile();
-    }
-  }, [userId])
+    }else
+    setIsLeadProfile(true)
+  }, [userId,isLeadProfile])
   return (
     <>
       {
